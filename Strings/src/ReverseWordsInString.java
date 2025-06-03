@@ -53,8 +53,30 @@ class ReverseWordsInString {
         return sb.toString();
     }
 
+    public static void  reverse(char[] ar, int i, int j){
+        for(;i<j;i++,j--){
+            char t=ar[i];
+            ar[i]=ar[j];
+            ar[j]=t;
+        }
+    }
+
+    public static String reverseWords2(String s) {
+        char[] ar = s.toCharArray();
+        int  n = ar.length, j=0, i=0;
+        reverse(ar,0, n-1); //reverse complete string
+        while(i<n) {
+            int st = j; //start of a word
+            while (i < n && ar[i] == ' ') i++; //remove initial spaces
+            while (i < n && ar[i] != ' ') ar[j++] = ar[i++]; //copy values
+            while (i < n && ar[i] == ' ') i++; //remove end spaces
+            reverse(ar, st, j-1); //reverse the word from initial to end
+            if (i < n) ar[j++] = ' '; // add space if completer string is not traversed
+        }
+        return new String(ar, 0, j); // return string
+    }
 
     public static void main(String[] args) {
-        System.out.println(reverseWords("a good   example"));
+        System.out.println(reverseWords2("a good   example"));
     }
 }
